@@ -51,12 +51,13 @@ public class CrudContaCorrente {
 
     // criando um contacorrente
     public void createContaCorrente(float saldo) {
-        String sql = "INSERT INTO contacorrente (CPF , Nome, saldo) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO contacorrente (CPF , Nome, saldo, ChequeEspecial) VALUES (?, ?, ?, ?)";
 
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, Integer.toString(this.userCPF));
             statement.setString(2, this.Nome);
             statement.setString(3, saldo+"");
+            statement.setString(4, "500.00");
 
             statement.executeUpdate();
 

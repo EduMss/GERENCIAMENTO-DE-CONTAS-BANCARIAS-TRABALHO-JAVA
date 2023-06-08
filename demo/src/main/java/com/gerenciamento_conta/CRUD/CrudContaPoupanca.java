@@ -51,12 +51,13 @@ public class CrudContaPoupanca {
 
     // criando um contapoupanca
     public void createContaPoupanca(float saldo) {
-        String sql = "INSERT INTO contapoupanca (CPF , Nome, saldo) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO contapoupanca (CPF , Nome, saldo, taxa) VALUES (?, ?, ?, ?)";
 
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, Integer.toString(this.userCPF));
             statement.setString(2, this.Nome);
             statement.setString(3, saldo+"");
+            statement.setString(4, "0.005");
 
             statement.executeUpdate();
 

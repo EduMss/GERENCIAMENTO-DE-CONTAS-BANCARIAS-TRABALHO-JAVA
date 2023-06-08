@@ -1,49 +1,46 @@
 package com.gerenciamento_conta;
+import com.gerenciamento_conta.CRUD.CrudPessoa;
 
 public class Pessoa {
     private String nome;
     private int cpf;
-    private Conta[] conta;
-    private ContaCorrente[] contaCorrente;
-    private ContaPoupanca[] contaPoupanca;
-
+    private CrudPessoa crudPessoa;
+    private boolean ContaExiste;
 
     //Contrutor
-    Pessoa(String nome, int cpf){
-        this.nome = nome;
+    Pessoa(int cpf){
         this.cpf = cpf;
+        this.crudPessoa = new CrudPessoa(this.cpf);
+        if(crudPessoa.UsuarioExiste()){
+            this.ContaExiste = true;
+            this.nome = this.crudPessoa.getNome();
+        } else {
+            this.ContaExiste = false;
+        }
+    }
+
+    public String PegarNome(){
+        return this.nome;
+    }
+
+    public int PegarCpf(){
+        return this.cpf;
+    }
+
+    public CrudPessoa PegarCrudPessoa(){
+        return this.crudPessoa;
+    }
+
+    public boolean ContaExiste(){
+        return this.ContaExiste;
+    }
+
+    public void CrearContaPesso(String nome){
+        this.nome = nome;
+        this.crudPessoa.createUserPessoa(this.nome);   
     }
 
 
-    //Conta
-    public void CriarConta(int numero_conta, float saldo){
-        this.conta =  new Conta[this.conta.length];
-        this.conta[this.conta.length - 1] = new Conta(0, this.cpf, this.nome, 500.50f);
-    }
-
-    public void QuantasContas(){
-        System.out.println(this.conta.length);
-    }
-
-    //Conta Corrente
-    public void CriarContaCorrente(int numero_conta, float saldo){
-        this.contaCorrente =  new ContaCorrente[this.contaCorrente.length];
-        this.contaCorrente[this.contaCorrente.length - 1] = new ContaCorrente(0, this.cpf, this.nome, 500.50f);
-    }
-
-    public void QuantasContasCorrente(){
-        System.out.println(this.contaCorrente.length);
-    }
-
-    //Conta Poupança
-    public void CriarContaPoupanca(int numero_conta, float saldo){
-        this.contaPoupanca =  new ContaPoupanca[this.contaPoupanca.length];
-        this.contaPoupanca[this.contaPoupanca.length - 1] = new ContaPoupanca(0, this.cpf, this.nome, 500.50f);
-    }
-
-    public void QuantasContaPoupanca(){
-        System.out.println(this.contaPoupanca.length);
-    }
 
 
 }
