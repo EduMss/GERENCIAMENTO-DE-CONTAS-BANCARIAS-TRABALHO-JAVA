@@ -1,36 +1,14 @@
 package com.gerenciamento_conta;
-import com.gerenciamento_conta.CRUD.CrudContaCorrente;
 import com.gerenciamento_conta.CRUD.CrudPessoa;
 
-public class ContaCorrente{
-    private int numero_conta;
-    private int cpf;
-    private String NomeTitular;
-    private float saldo;
+public class ContaCorrente extends Conta{
     private float cheque_especial;
-    private CrudPessoa crudPessoa;
-    private CrudContaCorrente crudContaCorrente;
-    private boolean ContaExiste;
 
     public ContaCorrente(CrudPessoa crudPessoa){
-        this.crudPessoa = crudPessoa;
-        this.crudContaCorrente = new CrudContaCorrente(this.crudPessoa);
-        if(crudContaCorrente.ContaCorrenteExiste()){
-            this.ContaExiste = true;
-            this.numero_conta = this.crudContaCorrente.PegarNumContaCorrente();
-            this.cpf = this.crudPessoa.getCPF();
-            this.NomeTitular = this.crudPessoa.getNome();
-            this.saldo = this.crudContaCorrente.PegarSaldoContaCorrente();
+        super(crudPessoa, 0);
+        if(ContaExiste){
             this.cheque_especial = this.crudContaCorrente.PegarChequeEspecialContaCorrente();
-        } else {
-            this.ContaExiste = false;
-            this.cpf = this.crudPessoa.getCPF();
-            this.NomeTitular = this.crudPessoa.getNome();
         }
-    }
-
-    public boolean ContaExiste(){
-        return this.ContaExiste;
     }
 
     public void CriarConta(float saldo){
@@ -39,24 +17,6 @@ public class ContaCorrente{
         this.cheque_especial = this.crudContaCorrente.PegarChequeEspecialContaCorrente();
         this.saldo = saldo;
         this.ContaExiste = true;
-    }
-
-    //consultas
-    public int ConsultarNumeroConta(){
-        return this.numero_conta;
-    }
-
-    public int ConsultarCPF(){
-        return this.cpf;
-    }
-
-    public String ConsultarTitular(){
-        return this.NomeTitular;
-    }
-
-    public float ConsultarSaldo(){
-        this.saldo = this.crudContaCorrente.PegarSaldoContaCorrenteBD();
-        return this.saldo;
     }
 
     public void Deposita(float deposito){
@@ -70,20 +30,13 @@ public class ContaCorrente{
                 this.saldo += deposito; 
                 this.crudContaCorrente.AlterarSaldoContaCorrente(this.saldo);
             }
-
         } else {
             this.saldo += deposito; 
             this.crudContaCorrente.AlterarSaldoContaCorrente(this.saldo);
         }
     }
 
-    //função saque
-    public void DiminuirSaldo(float saque){
-        this.saldo = this.crudContaCorrente.PegarSaldoContaCorrenteBD();
-        this.saldo -= saque;
-        this.crudContaCorrente.AlterarSaldoContaCorrente(this.saldo);
-    }
-
+    @Override
     public boolean sacar(float saque){
         if (ConsultarSaldo() - saque < 0){
             if(ConsultarChequeEspecial() < saque - ConsultarSaldo()){
@@ -108,11 +61,6 @@ public class ContaCorrente{
     public float ConsultarChequeEspecial(){
         this.cheque_especial = this.crudContaCorrente.PegarChequeEspecialContaCorrenteBD();
         return this.cheque_especial;
-    }
-
-    public float ConsultarSaldoComChequeEspecial(){
-        this.cheque_especial = this.crudContaCorrente.PegarChequeEspecialContaCorrenteBD();
-        return ConsultarSaldo() + cheque_especial;
     }
 
     public void AleterarChequeEspecial(float ChequeEspecial){

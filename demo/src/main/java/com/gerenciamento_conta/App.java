@@ -15,8 +15,8 @@ public class App {
             ContaPoupanca usuarioContaPoupanca = new ContaPoupanca(usuario.PegarCrudPessoa());
             if(usuarioContaPoupanca.ContaExiste()){
                 System.out.println("ContaPoupança Logado");
-                // usuarioContaPoupanca.Deposita(201.3f);
-                usuarioContaPoupanca.sacar(280.3f);
+                usuarioContaPoupanca.Deposita(201.3f);
+                // usuarioContaPoupanca.sacar(280.3f);
                 System.out.println(usuarioContaPoupanca.ConsultarSaldo());
             } else {
                 System.out.println("ContaPoupança Criada");
