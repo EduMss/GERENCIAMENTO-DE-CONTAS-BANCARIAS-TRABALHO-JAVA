@@ -38,11 +38,10 @@ public class ContaCorrente extends Conta{
 
     @Override
     public boolean sacar(float saque){
-        if (ConsultarSaldo() - saque < 0){
-            if(ConsultarChequeEspecial() < saque - ConsultarSaldo()){
+        if(ConsultarSaldo() - saque < 0){
+            if(ConsultarChequeEspecial() < saque){
                 return false;
             } else {
-                System.out.println("esta passando aqui");
                 this.saldo -= saque;
                 this.crudContaCorrente.AlterarSaldoContaCorrente(this.saldo);
 

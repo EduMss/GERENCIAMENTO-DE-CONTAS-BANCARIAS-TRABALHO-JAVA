@@ -94,11 +94,21 @@ public class Conta {
     }
 
     public boolean sacar(float saque){
-        if (ConsultarSaldo() < 0){
+        if (ConsultarSaldo() - saque < 0){
             return false;
         } else {
             DiminuirSaldo(saque);
             return true;
+        }
+    }
+
+    public void deletarConta(){
+        if(this.TipoConta == 0){
+            this.crudContaCorrente.deletContaCorrente();
+        } else if(this.TipoConta == 1){
+            this.crudContaPoupanca.deletContaPoupanca();
+        } else {
+            System.out.println("error no Tipo de Conta");
         }
     }
 
