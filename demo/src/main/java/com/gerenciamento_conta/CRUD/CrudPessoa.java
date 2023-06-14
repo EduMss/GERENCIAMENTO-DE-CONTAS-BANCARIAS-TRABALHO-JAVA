@@ -6,9 +6,11 @@ public class CrudPessoa {
     private Connection connection;
     private int userCPF;
     private String Nome;
+    private CrudLog crudlog;
 
     //construtor
     public CrudPessoa(int CPF) {
+        this.crudlog = new CrudLog();
         this.userCPF = CPF;
         try {
             connection = DatabaseManager.getConnection();
@@ -29,8 +31,10 @@ public class CrudPessoa {
 
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, Integer.toString(this.userCPF));
-
             statement.executeUpdate();
+
+            this.crudlog.log("Pessoa", String.valueOf(statement));
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -67,6 +71,8 @@ public class CrudPessoa {
             statement.setString(2, Nome);
 
             statement.executeUpdate();
+
+            this.crudlog.log("Pessoa", String.valueOf(statement));
 
             this.Nome = Nome;
         } catch (SQLException e) {
@@ -107,5 +113,7 @@ public class CrudPessoa {
     public String getNome(){
         return this.Nome;
     }
+
+
 
 }

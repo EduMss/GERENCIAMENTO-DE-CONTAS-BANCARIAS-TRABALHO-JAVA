@@ -9,10 +9,13 @@ public class CrudContaPoupanca {
     private int NumeroConta;
     private float Saldo;
     private float Taxa;
+    private CrudLog crudlog;
     
+    //Verificação da Conta com Com as variaveis obtidas pelo CrudPessoa, utilizando o try/ catch para se caso houver erros com o Banco de Dados
     public CrudContaPoupanca(CrudPessoa Usuario) {
         this.userCPF = Usuario.getCPF();
         this.Nome = Usuario.getNome();
+        this.crudlog = new CrudLog();
 
         try {
             connection = DatabaseManager.getConnection();
@@ -50,16 +53,18 @@ public class CrudContaPoupanca {
     
 
     // criando um contapoupanca
-    public void createContaPoupanca(float saldo) {
+    public void createContaPoupanca(float saldo, float taxa) {
         String sql = "INSERT INTO contapoupanca (CPF , Nome, saldo, taxa) VALUES (?, ?, ?, ?)";
 
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, Integer.toString(this.userCPF));
             statement.setString(2, this.Nome);
             statement.setString(3, saldo+"");
-            statement.setString(4, "0.005");
+            statement.setString(4, taxa+"");
 
             statement.executeUpdate();
+
+            crudlog.log("ContaPoupança", String.valueOf(statement));
 
             this.NumeroConta = PegarNumContaPoupancaBD();
             this.Saldo = PegarSaldoContaPoupancaBD();
@@ -77,6 +82,9 @@ public class CrudContaPoupanca {
             statement.setString(1, Integer.toString(this.NumeroConta));
 
             statement.executeUpdate();
+
+            crudlog.log("ContaPoupança", String.valueOf(statement));
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -89,7 +97,6 @@ public class CrudContaPoupanca {
 
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, Integer.toString(this.userCPF));
-
             ResultSet resultSet = statement.executeQuery();
 
             if (resultSet.next()) {
@@ -118,8 +125,9 @@ public class CrudContaPoupanca {
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, saldo + "");
             statement.setString(2, Integer.toString(this.NumeroConta));
-
             statement.executeUpdate();
+
+            crudlog.log("ContaPoupança", String.valueOf(statement));
 
             this.Saldo = saldo;
         } catch (SQLException e) {
@@ -133,7 +141,6 @@ public class CrudContaPoupanca {
 
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, Integer.toString(this.NumeroConta));
-
             ResultSet resultSet = statement.executeQuery();
 
             if (resultSet.next()) {
@@ -162,8 +169,10 @@ public class CrudContaPoupanca {
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, saldo + "");
             statement.setString(2, Integer.toString(this.NumeroConta));
-
             statement.executeUpdate();
+
+            crudlog.log("ContaPoupança", String.valueOf(statement));
+
             this.Taxa = saldo;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -177,7 +186,6 @@ public class CrudContaPoupanca {
 
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, Integer.toString(this.NumeroConta));
-
             ResultSet resultSet = statement.executeQuery();
 
             if (resultSet.next()) {

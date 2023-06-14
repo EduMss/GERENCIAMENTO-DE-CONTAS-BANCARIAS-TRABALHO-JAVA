@@ -14,6 +14,7 @@ public class Conta {
     public CrudContaPoupanca crudContaPoupanca;
     public int TipoConta;// 0 = Corrente, 1 = Poupança
 
+    //Contrutor Conta, verificando se a conta existe, se existir ele define todos os valores pelo CRUD
     Conta(CrudPessoa crudPessoa, int TipoConta){
         this.crudPessoa = crudPessoa;
         this.TipoConta = TipoConta;
@@ -48,23 +49,24 @@ public class Conta {
         }
     }
 
+    //Retorna se a conta existe
     public boolean ContaExiste(){
         return this.ContaExiste;
     }
 
-    //consultas
+    //Retorna o numero da conta
     public int ConsultarNumeroConta(){
         return this.numero_conta;
     }
-
+    //Retornar o Cpf
     public int ConsultarCPF(){
         return this.cpf;
     }
-
+    //Retorna o Nome do Titular
     public String ConsultarTitular(){
         return this.NomeTitular;
     }
-
+    //ele rotorna o Saldo da Conta, ele faz uma verificação para saber se vai pegar da conta poupança(1) ou da corrente(0)
     public float ConsultarSaldo(){
         if(this.TipoConta == 0){
             this.saldo = this.crudContaCorrente.PegarSaldoContaCorrenteBD();
@@ -77,7 +79,7 @@ public class Conta {
         return this.saldo;
     }
 
-    //função saque
+    //Diminui o valor do Saldo de acordo com o tipo de conta, poupança(1) ou da corrente(0)
     public void DiminuirSaldo(float saque){
         if(this.TipoConta == 0){
             ConsultarSaldo();
@@ -92,7 +94,7 @@ public class Conta {
         }
 
     }
-
+    //função saque, O saque da Conta Corrente vai ser alterado dentro da classe ContaCorrente
     public boolean sacar(float saque){
         if (ConsultarSaldo() - saque < 0){
             return false;
@@ -101,7 +103,7 @@ public class Conta {
             return true;
         }
     }
-
+    // apagar a conta
     public void deletarConta(){
         if(this.TipoConta == 0){
             this.crudContaCorrente.deletContaCorrente();

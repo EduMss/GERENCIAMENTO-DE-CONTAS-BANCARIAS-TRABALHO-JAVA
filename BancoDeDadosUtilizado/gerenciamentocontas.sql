@@ -60,6 +60,17 @@ CREATE TABLE IF NOT EXISTS `gerenciamentocontas`.`ContaPoupanca` (
 )
 ENGINE = InnoDB;
 
+-- -----------------------------------------------------
+-- Table `gerenciamentocontas`.`log`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `gerenciamentocontas`.`log` (
+  `id_log` INT NOT NULL AUTO_INCREMENT,
+  `data` DATETIME NOT NULL,
+  `log` VARCHAR(300) NOT NULL,
+  `tabela` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`id_log`))
+ENGINE = InnoDB;
+
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;

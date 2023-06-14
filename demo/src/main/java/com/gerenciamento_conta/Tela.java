@@ -11,10 +11,9 @@ public class Tela extends JFrame{
     public Pessoa usuario;
     public ContaCorrente usuarioContaCorrente;
     public ContaPoupanca usuarioContaPoupanca;
-
+    //tela Contrutor
     public Tela(){
         // Configuração da janela
-
         setTitle(this.NomeJanela);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(this.WIDTH, this.HEIGHT);
@@ -25,7 +24,7 @@ public class Tela extends JFrame{
         //criando tela inicial
         TelaInicial();
     }
-
+    //tela Tela inicial para entrar com o cpf 
     public void TelaInicial(){
         JLabel TextoPrincipal = new JLabel("Entrar Na Sua Conta");
         JLabel TextoCPF = new JLabel("CPF:");
@@ -72,7 +71,7 @@ public class Tela extends JFrame{
         getContentPane().add(TextoInformativo2).setBounds(170, 185, 400, 60);
         getContentPane().add(TextoInformativo3).setBounds(170, 200, 400, 60);
     }
-
+    //tela de cadastro se o cpf não existir no banco 
     public void TelaCadastro(){
         JLabel TextoPrincipal = new JLabel("Cadastrar Sua Conta");
         JLabel TextoNome = new JLabel("Nome:");
@@ -120,7 +119,7 @@ public class Tela extends JFrame{
         getContentPane().add(BotaoFinalizarCadastro).setBounds(170, 150, 250, 40);
         getContentPane().add(BotaoVoltarTela).setBounds(170, 200, 250, 40);
     }
-
+    //tela de loading apos finalizar o cadastro
     public void TelaCadastroFinalizado(){
         JLabel TextoPrincipal = new JLabel("Cadastrado com Sucesso!"); 
         JLabel TextoRedirecionamento = new JLabel("Você está sendo redirecionado a Menu de Gerenciamento de Contas"); 
@@ -149,7 +148,7 @@ public class Tela extends JFrame{
         timer.setRepeats(false); // Define para não repetir a ação
         timer.start();
     }
-    
+    //menu para escolher o tipo de conta desejada
     public void TelaMenuGerenciamentoContas(){
 
         usuarioContaCorrente = new ContaCorrente(usuario.PegarCrudPessoa());
@@ -244,7 +243,7 @@ public class Tela extends JFrame{
 
         getContentPane().add(BotaoTelaInicial).setBounds(115, 270, 340, 30);
     }
-
+    //menu da conta corrente depositos, saques
     public void TelaContaCorrente(){
         JLabel TextoPrincipal = new JLabel("Conta Corrente");
 
@@ -345,7 +344,7 @@ public class Tela extends JFrame{
         getContentPane().add(TextoDeletarConta).setBounds(115, 285, 400, 30);
         getContentPane().add(BotaoDeletarConta).setBounds(115, 310, 100, 30);
     }
-
+    //menu da conta poupança depositos, saques
     public void TelaContaPoupanca(){
         JLabel TextoPrincipal = new JLabel("Conta Poupança");
 
@@ -440,7 +439,7 @@ public class Tela extends JFrame{
         getContentPane().add(TextoDeletarConta).setBounds(115, 285, 400, 30);
         getContentPane().add(BotaoDeletarConta).setBounds(115, 310, 100, 30);
     }
-
+    //tela de cadastro da conta corrente, nessa tela o usuario so tera que inserir o saldo da conta
     public void TelaCadastroContaCorrente(){     
         JLabel TextoPrincipal = new JLabel("Cadastrar Sua Conta Corrente");
         JLabel TextoNome = new JLabel("Saldo da conta:");
@@ -487,7 +486,7 @@ public class Tela extends JFrame{
         getContentPane().add(BotaoFinalizarCadastro).setBounds(170, 150, 250, 40);
         getContentPane().add(BotaoVoltarTela).setBounds(170, 200, 250, 40);
     }
-
+    //tela de cadastro da conta poupança, nessa tela o usuario so tera que inserir o saldo da conta
     public void TelaCadastroContaPoupanca(){   
         JLabel TextoPrincipal = new JLabel("Cadastrar Sua Conta Poupança");
         JLabel TextoNome = new JLabel("Saldo da conta:");
